@@ -1,6 +1,7 @@
 # integration_test.sh
 #!/bin/bash
 
+
 # Nginx Service Test
 echo "Running Nginx service test..."
 sudo systemctl status nginx | grep -q "Active: active" || { echo "Nginx service not running"; exit 1; }
