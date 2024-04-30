@@ -4,6 +4,11 @@ provider "google" {
   region      = "us-central1"
 }
 
+variable "google_application_credentials" {
+  type    = string
+  default = var.google_application_credentials
+}
+
 resource "google_compute_instance" "default" {
   name         = "web-server"
   machine_type = "e2-micro"

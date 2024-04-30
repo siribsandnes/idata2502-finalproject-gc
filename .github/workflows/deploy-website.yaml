@@ -9,7 +9,11 @@ jobs:
   terraform:
     name: Deploy Infrastructure
     runs-on: ubuntu-latest
-    
+
+    env:
+      GOOGLE_APPLICATION_CREDENTIALS = ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+
+
     defaults:
       run:
         working-directory: ./terraform
