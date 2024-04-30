@@ -22,19 +22,19 @@ jobs:
         run: terraform init
 
       - name: Run Unit Tests
-        run: bash unit_test.sh
+        run: bash tests/unit_test.sh
 
       - name: Run Integration Tests
-        run: bash integration_test.sh
+        run: bash tests/integration_test.sh
 
       - name: Run Load Tests
-        run: bash load_test.sh
+        run: bash tests/load_test.sh
 
       - name: Run Security Tests
-        run: bash security_test.sh
+        run: bash tests/security_test.sh
 
       - name: Run Regression Tests
-        run: bash regression_test.sh
+        run: bash tests/regression_test.sh
 
       - name: Run Performance Tests
-        run: bash performance_test.sh
+        run: bash tests/performance_test.sh
