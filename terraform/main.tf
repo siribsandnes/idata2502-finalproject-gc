@@ -5,7 +5,7 @@ provider "google" {
 }
 
 resource "google_compute_instance" "default" {
-  name         = "web-server"
+  name         = "web-server-1"
   machine_type = "e2-micro"
   zone         = "us-central1-a"
   tags         = ["http-server"]
