@@ -1,0 +1,40 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.1.0
+
+      - name: Initialize Terraform
+        run: terraform init
+
+      - name: Run Unit Tests
+        run: bash unit_test.sh
+
+      - name: Run Integration Tests
+        run: bash integration_test.sh
+
+      - name: Run Load Tests
+        run: bash load_test.sh
+
+      - name: Run Security Tests
+        run: bash security_test.sh
+
+      - name: Run Regression Tests
+        run: bash regression_test.sh
+
+      - name: Run Performance Tests
+        run: bash performance_test.sh
