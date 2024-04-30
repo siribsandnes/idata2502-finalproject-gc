@@ -6,7 +6,7 @@ provider "google" {
 
 variable "google_application_credentials" {
   type    = string
-  default = var.google_application_credentials
+  default = "/Users/sirisandnes/Documents/Skole/brave-aviary-400922-0f08d237feca.json"
 }
 
 resource "google_compute_instance" "default" {
