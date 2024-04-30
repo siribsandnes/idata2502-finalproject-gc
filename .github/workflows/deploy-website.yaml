@@ -10,10 +10,6 @@ jobs:
     name: Deploy Infrastructure
     runs-on: ubuntu-latest
 
-    env:
-      GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
-
-
     defaults:
       run:
         working-directory: ./terraform
@@ -29,6 +25,10 @@ jobs:
         with:
           terraform_version: '1.0.0'
           node-version: '20'
+          
+      - name: Create GCP Credentials File
+        run: echo "${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}" > ${{ github.workspace }}/credentials.json
+        shell: bash
 
       - name: Terraform Format
         run: terraform fmt
