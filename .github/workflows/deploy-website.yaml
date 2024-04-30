@@ -40,8 +40,8 @@ jobs:
         run: terraform validate
 
       - name: Terraform Plan
-        run: terraform plan -input=false -var="google_application_credentials=${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}"
+        run: terraform plan -input=false 
 
       - name: Terraform Apply
-        run: terraform apply -auto-approve -var="google_application_credentials=${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}"
+        run: terraform apply 
       
