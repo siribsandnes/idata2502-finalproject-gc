@@ -25,7 +25,7 @@ jobs:
         run: terraform validate
 
       - name: Terraform Plan
-        run: terraform plan
+        run: terraform plan -out=tfplan
 
       - name: Run Unit Tests
         run: bash tests/unit_test.sh
@@ -46,4 +46,4 @@ jobs:
         run: bash tests/performance_test.sh
 
       - name: Terraform Apply
-        run: terraform apply
+        run: terraform apply tfplan
