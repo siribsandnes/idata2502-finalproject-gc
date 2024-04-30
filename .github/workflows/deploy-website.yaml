@@ -17,15 +17,12 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v2
-        with:
-          node-version: '20'
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
         with:
           terraform_version: '1.0.0'
-          node-version: '20'
-          
+
       - name: Create GCP Credentials File
         run: echo "${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}" > ${{ github.workspace }}/credentials.json
         shell: bash
@@ -40,8 +37,7 @@ jobs:
         run: terraform validate
 
       - name: Terraform Plan
-        run: terraform plan -input=false 
+        run: terraform plan -var="google_application_credentials=${{ github.workspace }}/credentials.json" -input=false 
 
       - name: Terraform Apply
-        run: terraform apply 
-      
+        run: terraform apply -auto-approve -var="google_application_credentials=${{ github.workspace }}/credentials.json"
