@@ -20,6 +20,12 @@ jobs:
 
       - name: Initialize Terraform
         run: terraform init
+      
+      - name: Terraform Validate
+        run: terraform validate
+
+      - name: Terraform Plan
+        run: terraform plan
 
       - name: Run Unit Tests
         run: bash tests/unit_test.sh
@@ -38,3 +44,6 @@ jobs:
 
       - name: Run Performance Tests
         run: bash tests/performance_test.sh
+
+      - name: Terraform Apply
+        run: terraform apply
