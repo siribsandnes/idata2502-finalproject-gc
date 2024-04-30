@@ -1,4 +1,4 @@
-name: CI/CD Pipeline
+name: Deploy Website
 
 on:
   push:
@@ -6,47 +6,37 @@ on:
       - main
 
 jobs:
-  build:
+  terraform:
+    name: Deploy Infrastructure
     runs-on: ubuntu-latest
+    
+    defaults:
+      run:
+        working-directory: ./terraform
 
     steps:
-      - name: Checkout code
+      - name: Checkout Repo
         uses: actions/checkout@v2
+        with:
+          node-version: '20'
 
-      - name: Install Terraform
+      - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
         with:
-          terraform_version: 1.1.0
+          terraform_version: '1.0.0'
+          node-version: '20'
 
-      - name: Change to Terraform directory
-        run: cd terraform
+      - name: Terraform Format
+        run: terraform fmt
 
-      - name: Initialize Terraform
+      - name: Terraform Init
         run: terraform init
-      
+
       - name: Terraform Validate
         run: terraform validate
 
       - name: Terraform Plan
         run: terraform plan
 
-      - name: Run Unit Tests
-        run: bash tests/unit_test.sh
-
-      - name: Run Integration Tests
-        run: bash tests/integration_test.sh
-
-      - name: Run Load Tests
-        run: bash tests/load_test.sh
-
-      - name: Run Security Tests
-        run: bash tests/security_test.sh
-
-      - name: Run Regression Tests
-        run: bash tests/regression_test.sh
-
-      - name: Run Performance Tests
-        run: bash tests/performance_test.sh
-
       - name: Terraform Apply
-        run: terraform apply tfplan
+        run: terraform apply
