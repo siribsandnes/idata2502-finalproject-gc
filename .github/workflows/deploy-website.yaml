@@ -6,9 +6,33 @@ on:
       - main
 
 jobs:
+  test:
+    name: Terraform Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+
+      - name: Set up Go 1.15
+        uses: actions/setup-go@v2
+        with:
+          go-version: '1.15'
+
+      - name: Install Dependencies
+        run: |
+          cd test
+          go get -v -t -d ./...
+
+      - name: Run Tests
+        run: |
+          cd test
+          go test -v
+
   terraform:
     name: Deploy Infrastructure
     runs-on: ubuntu-latest
+    needs: test  # This ensures the Terraform job only runs if the test job succeeds
 
     defaults:
       run:
@@ -29,7 +53,6 @@ jobs:
           echo '${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}' > ${{ github.workspace }}/credentials.json
         shell: bash
 
-
       - name: Terraform Format
         run: terraform fmt
 
@@ -40,7 +63,7 @@ jobs:
         run: terraform validate
 
       - name: Terraform Plan
-        run: terraform plan -var="google_application_credentials=${{ github.workspace }}/credentials.json" -input=false 
+        run: terraform plan -var="google_application_credentials=${{ github.workspace }}/credentials.json" -input=false -out=tfplan
 
       - name: Terraform Apply
         run: terraform apply -auto-approve -var="google_application_credentials=${{ github.workspace }}/credentials.json"
