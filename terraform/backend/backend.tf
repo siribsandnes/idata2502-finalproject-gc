@@ -1,7 +1,6 @@
 terraform {
   backend "gcs" {
-    bucket  = "my-bucket"
+    bucket  = "idata2502-bucket-sirisandnes"
     prefix  = "terraform/state"
   }
 }
-
