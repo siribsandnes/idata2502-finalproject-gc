@@ -5,6 +5,13 @@ on:
     branches:
       - main
 
+name: Deploy Website
+
+on:
+  push:
+    branches:
+      - main
+
 jobs:
   test:
     name: Terraform Test
@@ -14,20 +21,26 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v2
 
-      - name: Set up Go 1.22
+      - name: Set up Go
         uses: actions/setup-go@v2
         with:
-          go-version: '1.22'
+          go-version: '1.15'
 
-      - name: Install Dependencies
+      - name: Setup Credentials
         run: |
-          cd test
-          go get -v -t -d ./...
+          echo "${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_JSON }}" > ./test/credentials.json
+        shell: bash
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS_JSON: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
 
-      - name: Run Tests
+      - name: Run Terratest
         run: |
           cd test
           go test -v
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ github.workspace }}/test/credentials.json
+
+
 
   terraform:
     name: Deploy Infrastructure
