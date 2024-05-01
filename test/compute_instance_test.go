@@ -1,6 +1,7 @@
 package test
 
 import (
+	"os"
 	"testing"
 
 	"github.com/gruntwork-io/terratest/modules/terraform"
@@ -8,19 +9,21 @@ import (
 )
 
 func TestTerraformGoogleComputeInstance(t *testing.T) {
-	terraformOptions := &terraform.Options{
+	credsPath := os.Getenv("GOOGLE_APPLICATION_CREDENTIALS") // Use the environment variable
 
+	terraformOptions := &terraform.Options{
 		TerraformDir: "../terraform",
 
-		Vars: map[string]interface{}{},
+		Vars: map[string]interface{}{
+			"google_application_credentials": credsPath,
+		},
 
 		NoColor: true,
 	}
 
 	defer terraform.Destroy(t, terraformOptions)
-
 	terraform.InitAndApply(t, terraformOptions)
 
-	instanceName := terraform.Output(t, terraformOptions, "ip")
-	assert.Equal(t, "expected-ip-address", instanceName)
+	instanceName := terraform.Output(t, terraformOptions, "instance_name")
+	assert.Equal(t, "web-server-2", instanceName)
 }
