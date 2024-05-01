@@ -68,4 +68,4 @@ jobs:
 
       - name: Terraform Apply
         run: |
-          terraform apply -auto-approve 
+          terraform apply -auto-approve -var="google_application_credentials=${{ github.workspace }}/credentials.json"
