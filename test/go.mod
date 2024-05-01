@@ -1,6 +1,6 @@
 module my_test
 
-go 1.22.2
+go 1.22
 
 require (
 	cloud.google.com/go v0.110.0 // indirect
