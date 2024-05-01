@@ -5,7 +5,7 @@ provider "google" {
 }
 
 resource "google_compute_instance" "default" {
-  name         = "web-server-2"
+  name         = "web-server-idata2502"
   machine_type = "e2-micro"
   zone         = "us-central1-a"
   tags         = ["http-server"]
