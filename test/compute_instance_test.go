@@ -25,5 +25,5 @@ func TestTerraformGoogleComputeInstance(t *testing.T) {
 	terraform.InitAndApply(t, terraformOptions)
 
 	instanceName := terraform.Output(t, terraformOptions, "instance_name")
-	assert.Equal(t, "web-server-2", instanceName)
+	assert.Equal(t, "web-server-idata2502-sbs", instanceName)
 }
